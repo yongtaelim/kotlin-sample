@@ -138,8 +138,8 @@ open class StaffCustomRepositoryImpl(
             )
             .from(staff)
             .where(
-                staff.age.eq(age)
-                    .and(eqLastName(lastName)),
+                staff.age.eq(age),
+                eqLastName(lastName),
                 eqName(name)
             )
 

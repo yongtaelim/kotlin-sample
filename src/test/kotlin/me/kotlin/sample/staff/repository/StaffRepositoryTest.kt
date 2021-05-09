@@ -162,10 +162,6 @@ class StaffRepositoryTest(
         assertThat(staffsPageImpl.content).hasSize(3)
     }
 
-    private fun generatePageable(page: Int, pageSize: Int, vararg order: Sort.Order): PageRequest {
-
-        val sort = Sort.by(order.asList())
-
-        return PageRequest.of(page, pageSize, sort)
-    }
+    private fun generatePageable(page: Int, pageSize: Int, vararg order: Sort.Order): PageRequest =
+        PageRequest.of(page, pageSize, Sort.by(order.asList()))
 }
