@@ -24,7 +24,7 @@ class MapperUtils {
 
         private fun getObjectMapper(objectMapper: ObjectMapper) =
             objectMapper
-//                .registerKotlinModule()
-//                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .registerKotlinModule()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
     }
 }
