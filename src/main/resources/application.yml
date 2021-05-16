@@ -1,0 +1,8 @@
+sample:
+  kotlin:
+    language: kotlin
+    study-days: 30
+  java:
+    language: java
+    study-days: 90
+    test: javaTest
