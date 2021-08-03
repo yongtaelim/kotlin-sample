@@ -31,9 +31,24 @@ open class QuerydslPageAndSortRepository(
 
     private fun <T> getPageImplIfGroupBy(pageable: Pageable, query: JPQLQuery<T>): PageImpl<T> {
         val queryResult = query.fetch()
-
         val totalCount = queryResult.size
-        val results = queryResult.subList(pageable.pageNumber, pageable.pageSize * (pageable.pageNumber + 1))
+
+        val offset = pageable.offset
+
+        // totalCount 보다 큰 값이 들어온 경우
+        if (offset > totalCount) {
+            return PageImpl(listOf(), pageable, totalCount.toLong())
+        }
+
+        // limit 설정
+        var limit = pageable.pageSize * (pageable.pageNumber + 1)
+        limit = if (limit > totalCount) {
+            totalCount
+        } else {
+            limit
+        }
+
+        val results = queryResult.subList(offset.toInt(), limit)
         return PageImpl(results, pageable, totalCount.toLong())
     }
 
