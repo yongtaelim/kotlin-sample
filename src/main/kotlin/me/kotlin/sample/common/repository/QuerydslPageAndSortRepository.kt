@@ -22,6 +22,22 @@ open class QuerydslPageAndSortRepository(
     }
 
     fun <T> getPageImpl(pageable: Pageable, query: JPQLQuery<T>): PageImpl<T> {
+        return if (query.metadata.groupBy.size > 0) {
+            getPageImplIfGroupBy(pageable, query)
+        } else {
+            getPageImplIfNotGroupBy(pageable, query)
+        }
+    }
+
+    private fun <T> getPageImplIfGroupBy(pageable: Pageable, query: JPQLQuery<T>): PageImpl<T> {
+        val queryResult = query.fetch()
+
+        val totalCount = queryResult.size
+        val results = queryResult.subList(pageable.pageNumber, pageable.pageSize * (pageable.pageNumber + 1))
+        return PageImpl(results, pageable, totalCount.toLong())
+    }
+
+    private fun <T> getPageImplIfNotGroupBy(pageable: Pageable, query: JPQLQuery<T>): PageImpl<T> {
         val totalCount = query.fetchCount()
 
         val results = getQuerydsl()
