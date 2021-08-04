@@ -10,6 +10,7 @@ import me.kotlin.sample.house.domain.entity.QHouse.house
 import me.kotlin.sample.staff.domain.entity.QStaff.staff
 import me.kotlin.sample.staff.domain.entity.Staff
 import me.kotlin.sample.staff.domain.vo.QStaffVo
+import me.kotlin.sample.staff.domain.vo.StaffGroupByVO
 import me.kotlin.sample.staff.domain.vo.StaffVo
 import me.kotlin.sample.store.domain.entity.QStore.store
 import org.springframework.data.domain.PageImpl
@@ -80,6 +81,27 @@ open class StaffCustomRepositoryImpl(
             .selectFrom(staff)
             .where(staff.id.eq(id))
             .fetchOne()
+
+    /**
+     * group by 절 Paging 처리
+     * @param pageable Pageable
+     * @return PageImpl<StaffGroupByVO>
+     */
+    override fun selectGroupById(pageable: Pageable): PageImpl<StaffGroupByVO> {
+        val queryResult = queryFactory
+            .select(
+                Projections.fields(
+                    StaffGroupByVO::class.java,
+                    staff.name,
+                    house.id.count()
+                )
+            )
+            .from(staff)
+            .join(staff.house, house)
+            .groupBy(house.id)
+
+        return super.getPageImpl(pageable, queryResult)
+    }
 
 
     /**

@@ -21,6 +21,15 @@ open class QuerydslPageAndSortRepository(
         return Querydsl(entityManager, builder)
     }
 
+    /**
+     * Paging 처리 결과값 조회
+     *   - Query Paging 결과값
+     *   - Pageable 객체
+     *   - Query total Count
+     * @param pageable Pageable
+     * @param query JPQLQuery<T>
+     * @return PageImpl<T>
+     */
     fun <T> getPageImpl(pageable: Pageable, query: JPQLQuery<T>): PageImpl<T> {
         return if (query.metadata.groupBy.size > 0) {
             getPageImplIfGroupBy(pageable, query)
@@ -29,6 +38,12 @@ open class QuerydslPageAndSortRepository(
         }
     }
 
+    /**
+     * GroupBy절을 사용하는 Query
+     * @param pageable Pageable
+     * @param query JPQLQuery<T>
+     * @return PageImpl<T>
+     */
     private fun <T> getPageImplIfGroupBy(pageable: Pageable, query: JPQLQuery<T>): PageImpl<T> {
         val queryResult = query.fetch()
         val totalCount = queryResult.size
@@ -52,6 +67,12 @@ open class QuerydslPageAndSortRepository(
         return PageImpl(results, pageable, totalCount.toLong())
     }
 
+    /**
+     * GroupBy절을 사용안하는 Query
+     * @param pageable Pageable
+     * @param query JPQLQuery<T>
+     * @return PageImpl<T>
+     */
     private fun <T> getPageImplIfNotGroupBy(pageable: Pageable, query: JPQLQuery<T>): PageImpl<T> {
         val totalCount = query.fetchCount()
 

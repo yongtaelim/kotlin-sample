@@ -1,6 +1,7 @@
 package me.kotlin.sample.staff.repository
 
 import me.kotlin.sample.staff.domain.entity.Staff
+import me.kotlin.sample.staff.domain.vo.StaffGroupByVO
 import me.kotlin.sample.staff.domain.vo.StaffVo
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
@@ -14,6 +15,8 @@ interface StaffCustomRepository {
     fun search(name: String): StaffVo?
 
     fun findStaffById(id: Long): Staff?
+
+    fun selectGroupById(pageable: Pageable): PageImpl<StaffGroupByVO>
 
     fun deleteQuery(name: String): Long?
 
