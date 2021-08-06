@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.4.5"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("jacoco")
 
     val kotlinVersion = "1.4.32"
 
@@ -49,13 +50,66 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
+tasks {
+    withType<KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = listOf("-Xjsr305=strict")
+            jvmTarget = "11"
+        }
+    }
+
+    withType<Test> {
+        useJUnitPlatform()
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+jacoco {
+    toolVersion = "0.8.6"
+
+    reportsDirectory.set(file("$buildDir/reports/jacoco"))
 }
+
+tasks {
+    getByName<Test>("test") {
+        extensions.configure(JacocoTaskExtension::class) {
+            setDestinationFile(file("$buildDir/jacoco/$name.exec"))
+        }
+    }
+
+    jacocoTestReport {
+        reports {
+            html.required.set(true)
+            xml.required.set(false)
+            csv.required.set(false)
+
+            html.outputLocation.set(file("$buildDir/jacocoHtml"))
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                element = "CLASS"
+
+                limit {
+                    counter = "BRANCH"
+                    value = "COVEREDRATIO"
+                    minimum = "0.10".toBigDecimal()
+                }
+            }
+        }
+    }
+}
+
+val testCoverage by tasks.registering {
+    group = "verification"
+    description = "Runs the unit tests with coverage"
+
+    dependsOn(":test",
+        ":jacocoTestReport",
+        ":jacocoTestCoverageVerification")
+
+    tasks["jacocoTestReport"].mustRunAfter(tasks["test"])
+    tasks["jacocoTestCoverageVerification"].mustRunAfter(tasks["jacocoTestReport"])
+}
+

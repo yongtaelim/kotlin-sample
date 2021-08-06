@@ -104,7 +104,6 @@ class StaffRepositoryTest(
     @DisplayName("수정 테스트")
     fun updateQueryTest() {
         // Given
-        val id = 1L
         val oldName = "yong1"
         val newName = "임용용"
 
