@@ -1,4 +1,4 @@
-package me.kotlin.sample.common.repository
+package me.kotlin.sample.common.querydsl.repository
 
 import com.querydsl.core.types.dsl.PathBuilderFactory
 import com.querydsl.jpa.JPQLQuery

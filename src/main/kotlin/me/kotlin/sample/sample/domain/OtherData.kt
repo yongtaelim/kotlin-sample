@@ -1,4 +1,4 @@
-package me.kotlin.sample.sample
+package me.kotlin.sample.sample.domain
 
 /**
  * Created by LYT to 2021/05/06

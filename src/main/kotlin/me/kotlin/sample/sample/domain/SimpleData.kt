@@ -1,4 +1,4 @@
-package me.kotlin.sample.sample
+package me.kotlin.sample.sample.domain
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import com.fasterxml.jackson.databind.annotation.JsonNaming

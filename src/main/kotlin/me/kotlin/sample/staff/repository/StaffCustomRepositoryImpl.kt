@@ -5,7 +5,7 @@ import com.querydsl.core.types.Projections
 import com.querydsl.core.types.dsl.BooleanExpression
 import com.querydsl.jpa.JPQLQuery
 import com.querydsl.jpa.impl.JPAQueryFactory
-import me.kotlin.sample.common.repository.QuerydslPageAndSortRepository
+import me.kotlin.sample.common.querydsl.repository.QuerydslPageAndSortRepository
 import me.kotlin.sample.house.domain.entity.QHouse.house
 import me.kotlin.sample.staff.domain.entity.QStaff.staff
 import me.kotlin.sample.staff.domain.entity.Staff

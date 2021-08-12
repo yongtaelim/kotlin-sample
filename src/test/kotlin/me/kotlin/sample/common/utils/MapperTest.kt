@@ -1,11 +1,9 @@
 package me.kotlin.sample.common.utils
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import me.kotlin.sample.sample.OtherData
-import me.kotlin.sample.sample.SimpleData
+import me.kotlin.sample.sample.domain.OtherData
+import me.kotlin.sample.sample.domain.SimpleData
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * Created by LYT to 2021/05/06

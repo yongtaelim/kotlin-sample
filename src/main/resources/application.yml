@@ -6,3 +6,11 @@ sample:
     language: java
     study-days: 90
     test: javaTest
+
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 3000
+    expire: 8
+    password: eoaqu
