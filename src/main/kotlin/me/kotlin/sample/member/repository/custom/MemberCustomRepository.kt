@@ -6,7 +6,7 @@ import me.kotlin.sample.member.domain.Member
  * Created by LYT to 2021/08/11
  */
 interface MemberCustomRepository {
-    fun selectById(id: Long): Member?
+    fun selectById(id: String): String?
     fun saveMember(member: Member)
-    fun deleteMember(id: Long): Boolean
+    fun deleteMember(id: String): Boolean
 }

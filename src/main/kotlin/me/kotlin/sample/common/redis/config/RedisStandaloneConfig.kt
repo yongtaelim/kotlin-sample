@@ -33,7 +33,7 @@ class RedisStandaloneConfig(
         val configuration = RedisStandaloneConfiguration()
         configuration.hostName = redisProperties.host
         configuration.port = redisProperties.port
-        configuration.password = RedisPassword.of(redisProperties.password)
+//        configuration.password = RedisPassword.of(redisProperties.password)
         return LettuceConnectionFactory(configuration)
     }
 
@@ -43,8 +43,8 @@ class RedisStandaloneConfig(
      */
     @Primary
     @Bean(name = ["memberRedisTemplate"])
-    fun memberRedisTemplate(): RedisTemplate<Long, Member> {
-        val redisTemplate = RedisTemplate<Long, Member>()
+    fun memberRedisTemplate(): RedisTemplate<String, String> {
+        val redisTemplate = RedisTemplate<String, String>()
         redisTemplate.setConnectionFactory(redisConnectionFactory())
 
         // 아래의 설정값이 없으면 스프링에서 조회할 때는 값이 정상으로 보이지만 redis-cli로 조회하면 `xec\x83\x98\xed\x94\x8c1` 이런식으로 보여짐
@@ -52,8 +52,8 @@ class RedisStandaloneConfig(
         redisTemplate.valueSerializer = StringRedisSerializer()
 
         // Hash Operation 사용 시
-        redisTemplate.hashKeySerializer = StringRedisSerializer()
-        redisTemplate.hashValueSerializer = StringRedisSerializer()
+//        redisTemplate.hashKeySerializer = StringRedisSerializer()
+//        redisTemplate.hashValueSerializer = StringRedisSerializer()
 
         return redisTemplate
     }

@@ -9,8 +9,7 @@ sample:
 
 spring:
   redis:
-    host: 127.0.0.1
+    host: 13.125.66.120
     port: 6379
     timeout: 3000
     expire: 8
-    password: eoaqu

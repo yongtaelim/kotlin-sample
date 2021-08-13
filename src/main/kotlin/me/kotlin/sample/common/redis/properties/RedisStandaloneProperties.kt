@@ -11,6 +11,6 @@ import org.springframework.boot.context.properties.ConstructorBinding
 class RedisStandaloneProperties(
     val host: String,
     val port: Int,
-    val password: String,
+//    val password: String,
     val expire: Long
 )

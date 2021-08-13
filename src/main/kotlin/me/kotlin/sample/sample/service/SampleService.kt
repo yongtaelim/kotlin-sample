@@ -36,11 +36,28 @@ class SampleService(
         return CommonResponse(staff)
     }
 
-    @Cacheable(value = ["category"], key="#id", cacheManager = "memberManager")
-    fun getMemberById(id: Long): CommonResponse<Member> {
+    @Cacheable(value = ["member"], key="#id", cacheManager = "memberManager")
+    fun getMemberById(id: String): CommonResponse<String> {
         val member = memberRepository.selectById(id)
             ?: return CommonResponse(HttpStatus.NOT_FOUND)
 
         return CommonResponse(member)
     }
+
+    fun saveMember(member: Member): CommonResponse<Unit> {
+        memberRepository.saveMember(member)
+        return CommonResponse(HttpStatus.CREATED)
+    }
+
+    fun getMemberByIdFromRepository(id: String): CommonResponse<Member> {
+        val member = memberRepository.findByIdOrNull(id)
+            ?: return CommonResponse(HttpStatus.NOT_FOUND)
+
+        return CommonResponse(member)
+    }
+
+    fun saveMemberFromRepository(member: Member): CommonResponse<Member> {
+        return CommonResponse(HttpStatus.CREATED, memberRepository.save(member))
+    }
+
 }

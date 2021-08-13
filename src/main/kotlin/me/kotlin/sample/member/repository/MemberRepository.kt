@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository
 /**
  * Created by LYT to 2021/08/11
  */
-interface MemberRepository: CrudRepository<Member, Long>, MemberCustomRepository {
+interface MemberRepository: CrudRepository<Member, String>, MemberCustomRepository {
 }

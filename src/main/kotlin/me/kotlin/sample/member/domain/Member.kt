@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisHash
 class Member(
 
     @Id
-    var id: Long? = null,
+    var id: String? = null,
     var name: String? = null,
     var age: Int? = null
 )
